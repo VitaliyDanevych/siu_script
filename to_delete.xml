@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE Model SYSTEM "/opt/ericsson/arne/etc/arne17_0.dtd">
+<Model version="1" importVersion="17.0">
+  <Delete>
+     <Object fdn="SubNetwork=ONRM_RootMo,SubNetwork=IPRAN,ManagedElement=CH9035_SIU01"/>
+     <Object fdn="SubNetwork=ONRM_RootMo,SubNetwork=IPRAN,ManagedElement=CH2703_SIU01"/>
+     <Object fdn="SubNetwork=ONRM_RootMo,SubNetwork=IPRAN,ManagedElement=CH9006_SIU01"/>
+     <Object fdn="SubNetwork=ONRM_RootMo,SubNetwork=IPRAN,ManagedElement=CH4651_SIU01"/>
+     <Object fdn="SubNetwork=ONRM_RootMo,SubNetwork=IPRAN,ManagedElement=CH4606_SIU01"/>
+  </Delete>
+</Model>
