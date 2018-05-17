@@ -41,7 +41,7 @@ do
         "Step 1: Chose target BSC name for SIU/TCU association")
             echo "you have the following list of BSC on OSS-RC1:"
             /opt/ericsson/bin/eac_esi_config -nelist | grep 'APG' | egrep "[B][0-9]" | awk '{print $1}' | perl -pi -e 's/\n/\|/g;' | perl -pi -e 's/\|$/\n/g;'
-            echo "Chise one of the mentioned BSC - just type it and press Enter"
+            echo "Choose one of the mentioned BSC - just type it and press Enter"
             read bsc_name
             echo 'It was choosen: ' $bsc_name 'Ok. Go to the next step!'
             show_menu
@@ -82,8 +82,17 @@ do
             
             #Making create txt file
             rm -rf ${wdir}/to_create.txt
-            cat ${wdir}/ipdatabase_selected.txt | perl -pi -e 's/^SubNetwork=ONRM_RootMo_R,SubNetwork=IPRAN,MeContext=((\w+\d+)_\w+\d+)@(\d+.\d+.\d+.\d+).*$/SIU,\1,\2,\3/gi' > ${wdir}/to_create.txt
-            echo "The ${wdir}/to_create.txt file has been created"
+            echo "${ENTER_LINE}Do you wish to replace TCU in name of all elements to SIU, (y) - replace, (n) - continue without replace?, ${RED_TEXT} press (y/n)? ${NORMAL}"
+            read answer
+                if [ "$answer" != "${answer#[Yy]}" ] ;then
+                   cat ${wdir}/ipdatabase_selected.txt | perl -pi -e 's/^SubNetwork=ONRM_RootMo_R,SubNetwork=IPRAN,MeContext=((\w+\d+)_\w+\d+)@(\d+.\d+.\d+.\d+).*$/SIU,\1,\2,\3/gi' | sed 's/TCU/SIU/' > ${wdir}/to_create.txt
+                   echo "${ENTER_LINE}Your choice is Yes. The TCU in elements name were replaced, ${MENU} see SIU elements below: ${NORMAL}"
+                   cat ${wdir}/to_create.txt
+                else
+                    cat ${wdir}/ipdatabase_selected.txt | perl -pi -e 's/^SubNetwork=ONRM_RootMo_R,SubNetwork=IPRAN,MeContext=((\w+\d+)_\w+\d+)@(\d+.\d+.\d+.\d+).*$/SIU,\1,\2,\3/gi' > ${wdir}/to_create.txt
+                    echo "${ENTER_LINE}Your choice is No. The program will not change TCU in elements name, ${MENU} see SIU elements below: ${NORMAL}"
+                    cat ${wdir}/to_create.txt
+            fi
             
             #Making delete xml file
             rm -rf ${wdir}/to_delete.xml
